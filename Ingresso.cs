@@ -16,17 +16,17 @@ namespace venda_ingressos
 
             bool possuiTrocoDisponivel = true;
 
+            ITemplateRegra vendaIngressoComNota25 = new TemplateRegraNota25();
+            ITemplateRegra vendaIngressoComNota50 = new TemplateRegraNota50();
+            ITemplateRegra vendaIngressoComNota100 = new TemplateRegraNota100();
+            ITemplateRegra vendaIngressoSemNota = new TemplateRegraSemNota();
+
+            vendaIngressoComNota25.Proximo = vendaIngressoComNota50;
+            vendaIngressoComNota50.Proximo = vendaIngressoComNota100;
+            vendaIngressoComNota100.Proximo = vendaIngressoSemNota;                
+
             foreach (var nota in pessoasNaFila)
-            {
-                ITemplateRegra vendaIngressoComNota25 = new TemplateRegraNota25();
-                ITemplateRegra vendaIngressoComNota50 = new TemplateRegraNota50();
-                ITemplateRegra vendaIngressoComNota100 = new TemplateRegraNota100();
-                ITemplateRegra vendaIngressoSemNota = new TemplateRegraSemNota();
-
-                vendaIngressoComNota25.Proximo = vendaIngressoComNota50;
-                vendaIngressoComNota50.Proximo = vendaIngressoComNota100;
-                vendaIngressoComNota100.Proximo = vendaIngressoSemNota;
-
+            {               
                 possuiTrocoDisponivel = vendaIngressoComNota25.Vender(nota, TrocoDisponivel);
 
                 if (!possuiTrocoDisponivel)
