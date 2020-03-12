@@ -14,8 +14,6 @@ namespace venda_ingressos
             if (!pessoasNaFila.Any())
                 return false;
 
-            bool possuiTrocoDisponivel = true;
-
             ITemplateRegra vendaIngressoComNota25 = new TemplateRegraNota25();
             ITemplateRegra vendaIngressoComNota50 = new TemplateRegraNota50();
             ITemplateRegra vendaIngressoComNota100 = new TemplateRegraNota100();
@@ -27,13 +25,13 @@ namespace venda_ingressos
 
             foreach (var nota in pessoasNaFila)
             {               
-                possuiTrocoDisponivel = vendaIngressoComNota25.Vender(nota, TrocoDisponivel);
+                var possuiTrocoDisponivel = vendaIngressoComNota25.Vender(nota, TrocoDisponivel);
 
                 if (!possuiTrocoDisponivel)
                     return false;
             }
 
-            return possuiTrocoDisponivel;
+            return true;
         }
     }
 }
